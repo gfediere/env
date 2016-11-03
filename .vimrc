@@ -1,6 +1,18 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+fun SetupVundle()
+    let c = get(g:, 'bundle', {})
+    let g:bundle = c
+    let c.plugin_root_dir = expand('$HOME', 1) . '/.vim/bundle'
+    let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/Vundle.vim'
+    if !isdirectory(c.plugin_root_dir.'/Vundle.vim')
+        execute '!git clone --depth=1 git@github.com:gfediere/Vundle.vim.git'
+            \       shellescape(c.plugin_root_dir.'/Vundke.vim', 1)
+    endif
+endfun
+call SetupVundle()
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
